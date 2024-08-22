@@ -1,17 +1,20 @@
 #include <iostream>
-#include <string>
 using namespace std;
 
-// Define a class named Book
 class Book {
 private:
     string title;
     string author;
     int year;
 
+    // Static variable to keep track of the total number of books
+    static int bookCount;
+
 public:
-    // Constructor to initialize the attributes
-    Book(string t, string a, int y) : title(t), author(a), year(y) {}
+    // Constructor to initialize the attributes and increment bookCount
+    Book(string t, string a, int y) : title(t), author(a), year(y) {
+        bookCount++;
+    }
 
     // Method to display book details
     void display() {
@@ -19,18 +22,22 @@ public:
         cout << "Author: " << author << endl;
         cout << "Year: " << year << endl;
     }
-     
+
+    // Static method to get the total number of books
+    static int getBookCount() {
+        return bookCount;
+    }
 };
 
+// Initialize static variable
+int Book::bookCount = 0;
+
 int main() {
-    // Dynamically allocate memory for a single Book object
-    Book* myBook = new Book("The Catcher in the Rye", "J.D. Salinger", 1951);
+    Book book1("1984", "George Orwell", 1949);
+    Book book2("To Kill a Mockingbird", "Harper Lee", 1960);
 
-    // Display the details of the book
-    myBook->display();
-
-    // Deallocate memory
-    delete myBook;
+    // Display the total number of books
+    cout << "Total number of books: " << Book::getBookCount() << endl;
 
     return 0;
 }
