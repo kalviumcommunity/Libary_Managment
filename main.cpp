@@ -13,22 +13,28 @@ public:
     // Constructor to initialize the attributes
     Book(string t, string a, int y) : title(t), author(a), year(y) {}
 
-    // Method to display book details using the 'this' pointer
+    // Method to display book details
     void display() {
-        cout << "Title: " << this->title << endl;
-        cout << "Author: " << this->author << endl;
-        cout << "Year: " << this->year << endl;
+        cout << "Title: " << title << endl;
+        cout << "Author: " << author << endl;
+        cout << "Year: " << year << endl;
     }
 };
 
 int main() {
-    // Create objects of the Book class
-    Book book1("1984", "George Orwell", 1949);
-    Book book2("To Kill a Mockingbird", "Harper Lee", 1960);
+    // Create an array of Book objects
+    Book library[3] = {
+        Book("1984", "George Orwell", 1949),
+        Book("To Kill a Mockingbird", "Harper Lee", 1960),
+        Book("Brave New World", "Aldous Huxley", 1932)
+    };
 
-    // Display the details of each book
-    book1.display();
-    book2.display();
+    // Display the details of each book in the array
+    for (int i = 0; i < 3; ++i) {
+        cout << "Book " << (i + 1) << ":" << endl;
+        library[i].display();
+        cout << endl;
+    }
 
     return 0;
 }
