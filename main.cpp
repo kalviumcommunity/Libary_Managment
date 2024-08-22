@@ -13,11 +13,11 @@ public:
     // Constructor to initialize the attributes
     Book(string t, string a, int y) : title(t), author(a), year(y) {}
 
-    // Method to display book details
+    // Method to display book details using the 'this' pointer
     void display() {
-        cout << "Title: " << title << endl;
-        cout << "Author: " << author << endl;
-        cout << "Year: " << year << endl;
+        cout << "Title: " << this->title << endl;
+        cout << "Author: " << this->author << endl;
+        cout << "Year: " << this->year << endl;
     }
 };
 
