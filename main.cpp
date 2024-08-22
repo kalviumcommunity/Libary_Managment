@@ -19,22 +19,18 @@ public:
         cout << "Author: " << author << endl;
         cout << "Year: " << year << endl;
     }
+     
 };
 
 int main() {
-    // Create an array of Book objects
-    Book library[3] = {
-        Book("1984", "George Orwell", 1949),
-        Book("To Kill a Mockingbird", "Harper Lee", 1960),
-        Book("Brave New World", "Aldous Huxley", 1932)
-    };
+    // Dynamically allocate memory for a single Book object
+    Book* myBook = new Book("The Catcher in the Rye", "J.D. Salinger", 1951);
 
-    // Display the details of each book in the array
-    for (int i = 0; i < 3; ++i) {
-        cout << "Book " << (i + 1) << ":" << endl;
-        library[i].display();
-        cout << endl;
-    }
+    // Display the details of the book
+    myBook->display();
+
+    // Deallocate memory
+    delete myBook;
 
     return 0;
 }
