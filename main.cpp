@@ -1,31 +1,43 @@
 #include <iostream>
 using namespace std;
 
-class Library {
+class Book {
 private:
-    static int totalBooks;
+    string title;
+    string author;
+    int year;
+
+    // Static variable to keep track of the total number of books
+    static int bookCount;
 
 public:
-    // Static method to add books to the library
-    static void addBooks(int count) {
-        totalBooks += count;
-        cout << count << " books added. Total books now: " << totalBooks << endl;
+    // Constructor to initialize the attributes and increment bookCount
+    Book(string t, string a, int y) : title(t), author(a), year(y) {
+        bookCount++;
     }
 
-    // Static method to display the total number of books
-    static void displayTotalBooks() {
-        cout << "Total number of books in the library: " << totalBooks << endl;
+    // Method to display book details
+    void display() {
+        cout << "Title: " << title << endl;
+        cout << "Author: " << author << endl;
+        cout << "Year: " << year << endl;
+    }
+
+    // Static method to get the total number of books
+    static int getBookCount() {
+        return bookCount;
     }
 };
 
 // Initialize static variable
-int Library::totalBooks = 0;
+int Book::bookCount = 0;
 
 int main() {
-    // Call static member functions without creating an object
-    Library::addBooks(5);
-    Library::addBooks(3);
-    Library::displayTotalBooks();
+    Book book1("1984", "George Orwell", 1949);
+    Book book2("To Kill a Mockingbird", "Harper Lee", 1960);
+
+    // Display the total number of books
+    cout << "Total number of books: " << Book::getBookCount() << endl;
 
     return 0;
 }
