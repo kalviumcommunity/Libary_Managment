@@ -2,12 +2,12 @@
 #include <string>
 using namespace std;
 
-// Define a class named Book with Encapsulation
+// class named Book with Encapsulation
 class Book {
 private:
-    string title;   // Private attribute
-    string author;  // Private attribute
-    int year;       // Private attribute
+    string title;   
+    string author;  
+    int year;       
 
 public:
     // Constructor to initialize the attributes
@@ -20,17 +20,15 @@ public:
         year = y;
     }
 
-    // Getter method to get the book title (Encapsulation)
+
+    //Encapsulation
+    // Getter method to get book details
     string getTitle() const {
         return title;
     }
-
-    // Getter method to get the book author (Encapsulation)
     string getAuthor() const {
         return author;
     }
-
-    // Getter method to get the book year (Encapsulation)
     int getYear() const {
         return year;
     }
