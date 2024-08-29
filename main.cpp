@@ -1,41 +1,37 @@
 #include <iostream>
 #include <string>
+#include <vector>
 using namespace std;
 
-// Define a class named Book with Encapsulation
 class Book {
 private:
-    string title;   // Private attribute
-    string author;  // Private attribute
-    int year;       // Private attribute
+    string title;
+    string author;
+    int year;
 
 public:
-    // Constructor to initialize the attributes
-    Book(string t, string a, int y) : title(t), author(a), year(y) {}
+    Book(string t, string a, int y) : title(t), author(a), year(y) {
+        cout << "Book '" << title << "' created." << endl;
+    }
 
-    // Setter method to set book details (Encapsulation)
+    ~Book() {
+        cout << "Book '" << title << "' destroyed." << endl;
+    }
+
     void setDetails(string t, string a, int y) {
         title = t;
         author = a;
         year = y;
     }
-
-    // Getter method to get the book title (Encapsulation)
     string getTitle() const {
         return title;
     }
-
-    // Getter method to get the book author (Encapsulation)
     string getAuthor() const {
         return author;
     }
-
-    // Getter method to get the book year (Encapsulation)
     int getYear() const {
         return year;
     }
-
-    // Method to display book details
     void display() const {
         cout << "Title: " << title << endl;
         cout << "Author: " << author << endl;
@@ -43,15 +39,39 @@ public:
     }
 };
 
-int main() {
-    // Create a Book object
-    Book myBook("1984", "George Orwell", 1949);
+class Library {
+private:
+    vector<Book> books; 
 
-    // Display book details using the getter methods
-    cout << "Book Details using Encapsulation:" << endl;
-    cout << "Title: " << myBook.getTitle() << endl;
-    cout << "Author: " << myBook.getAuthor() << endl;
-    cout << "Year: " << myBook.getYear() << endl;
+public:
+    // Method to add a book to the library
+    void addBook(const Book& book) {
+        books.push_back(book);
+    }
+
+    // Method to display all books in the library
+    void displayAllBooks() const {
+        cout << "Library Collection:" << endl;
+        for (const auto& book : books) {
+            book.display();
+            cout << endl;
+        }
+    }
+};
+
+int main() {
+    
+    Book book1("1984", "George Orwell", 1949);
+    Book book2("To Kill a Mockingbird", "Harper Lee", 1960);
+
+   
+    Library myLibrary;
+
+  
+    myLibrary.addBook(book1);
+    myLibrary.addBook(book2);
+
+    myLibrary.displayAllBooks();
 
     return 0;
 }
