@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-#include <vector>
 using namespace std;
 
 class Book {
@@ -10,27 +9,20 @@ private:
     int year;
 
 public:
+    Book() : title("Unknown"), author("Unknown"), year(0) {
+        cout << "Default Book created." << endl;
+    }
     Book(string t, string a, int y) : title(t), author(a), year(y) {
         cout << "Book '" << title << "' created." << endl;
     }
 
-    ~Book() {
-        cout << "Book '" << title << "' destroyed." << endl;
+    Book(const Book& other) : title(other.title), author(other.author), year(other.year) {
+        cout << "Book '" << title << "' copied." << endl;
     }
 
-    void setDetails(string t, string a, int y) {
-        title = t;
-        author = a;
-        year = y;
-    }
-    string getTitle() const {
-        return title;
-    }
-    string getAuthor() const {
-        return author;
-    }
-    int getYear() const {
-        return year;
+    // Destructor
+    ~Book() {
+        cout << "Book '" << title << "' destroyed." << endl;
     }
     void display() const {
         cout << "Title: " << title << endl;
@@ -39,39 +31,19 @@ public:
     }
 };
 
-class Library {
-private:
-    vector<Book> books; 
-
-public:
-    // Method to add a book to the library
-    void addBook(const Book& book) {
-        books.push_back(book);
-    }
-
-    // Method to display all books in the library
-    void displayAllBooks() const {
-        cout << "Library Collection:" << endl;
-        for (const auto& book : books) {
-            book.display();
-            cout << endl;
-        }
-    }
-};
-
 int main() {
     
+    Book defaultBook;
+    defaultBook.display();
+    cout << endl;
+
     Book book1("1984", "George Orwell", 1949);
-    Book book2("To Kill a Mockingbird", "Harper Lee", 1960);
+    book1.display();
+    cout << endl;
 
-   
-    Library myLibrary;
-
-  
-    myLibrary.addBook(book1);
-    myLibrary.addBook(book2);
-
-    myLibrary.displayAllBooks();
+    Book book2 = book1;
+    book2.display();
+    cout << endl;
 
     return 0;
 }
