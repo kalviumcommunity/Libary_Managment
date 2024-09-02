@@ -3,7 +3,7 @@
 using namespace std;
 
 class Book {
-private:
+protected:
     string title;
     string author;
     int year;
@@ -13,22 +13,14 @@ public:
     Book() : title("Unknown"), author("Unknown"), year(0) {
         cout << "Default Book created." << endl;
     }
-
     Book(string t, string a, int y) : title(t), author(a), year(y) {
         cout << "Book '" << title << "' created." << endl;
     }
-
-    Book(const Book& other) : title(other.title), author(other.author), year(other.year) {
-        cout << "Book '" << title << "' copied." << endl;
-    }
-
-    
-    ~Book() {
+    virtual ~Book() {
         cout << "Book '" << title << "' destroyed." << endl;
     }
 
-    
-    void display() const {
+    virtual void display() const {
         cout << "Title: " << title << endl;
         cout << "Author: " << author << endl;
         cout << "Year: " << year << endl;
@@ -41,45 +33,65 @@ private:
     string format;   
 
 public:
+
     EBook() : Book(), fileSize(0.0), format("Unknown") {
         cout << "Default EBook created." << endl;
     }
- 
     EBook(string t, string a, int y, double fs, string f) 
         : Book(t, a, y), fileSize(fs), format(f) {
         cout << "EBook '" << t << "' created." << endl;
     }
-
-    EBook(const EBook& other) 
-        : Book(other), fileSize(other.fileSize), format(other.format) {
-        cout << "EBook copied." << endl;
-    }
-
     ~EBook() {
-        cout << "EBook destroyed." << endl;
+        cout << "EBook '" << title << "' destroyed." << endl;
     }
 
-    void display() const {
-        
+    void display() const override {
         Book::display();
         cout << "File Size: " << fileSize << " MB" << endl;
         cout << "Format: " << format << endl;
     }
 };
 
-int main() {
+class PrintedBook : public Book {
+private:
+    int pageCount;   
+    string coverType;
+
+public:
     
-    EBook defaultEBook;
-    defaultEBook.display();
-    cout << endl;
+    PrintedBook() : Book(), pageCount(0), coverType("Unknown") {
+        cout << "Default PrintedBook created." << endl;
+    }
+    PrintedBook(string t, string a, int y, int pc, string ct)
+        : Book(t, a, y), pageCount(pc), coverType(ct) {
+        cout << "PrintedBook '" << t << "' created." << endl;
+    }
+    ~PrintedBook() {
+        cout << "PrintedBook '" << title << "' destroyed." << endl;
+    }
 
-    EBook ebook1("Digital Fortress", "Dan Brown", 1998, 1.5, "EPUB");
-    ebook1.display();
-    cout << endl;
+    void display() const override {
+        Book::display();
+        cout << "Page Count: " << pageCount << endl;
+        cout << "Cover Type: " << coverType << endl;
+    }
+};
 
-    EBook ebook2 = ebook1;
-    ebook2.display();
-    cout << endl;
+int main() {
+    Book* books[3];
+
+    books[0] = new Book("Generic Book", "John Doe", 2000);
+    books[1] = new EBook("Digital Fortress", "Dan Brown", 1998, 1.5, "EPUB");
+    books[2] = new PrintedBook("The Catcher in the Rye", "J.D. Salinger", 1951, 277, "Hardcover");
+
+    for (int i = 0; i < 3; ++i) {
+        books[i]->display();
+        cout << endl;
+    }
+
+    for (int i = 0; i < 3; ++i) {
+        delete books[i];
+    }
 
     return 0;
 }
