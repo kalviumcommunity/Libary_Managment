@@ -9,9 +9,11 @@ private:
     int year;
 
 public:
+    
     Book() : title("Unknown"), author("Unknown"), year(0) {
         cout << "Default Book created." << endl;
     }
+
     Book(string t, string a, int y) : title(t), author(a), year(y) {
         cout << "Book '" << title << "' created." << endl;
     }
@@ -20,10 +22,12 @@ public:
         cout << "Book '" << title << "' copied." << endl;
     }
 
-    // Destructor
+    
     ~Book() {
         cout << "Book '" << title << "' destroyed." << endl;
     }
+
+    
     void display() const {
         cout << "Title: " << title << endl;
         cout << "Author: " << author << endl;
@@ -31,18 +35,50 @@ public:
     }
 };
 
+class EBook : public Book {
+private:
+    double fileSize; 
+    string format;   
+
+public:
+    EBook() : Book(), fileSize(0.0), format("Unknown") {
+        cout << "Default EBook created." << endl;
+    }
+ 
+    EBook(string t, string a, int y, double fs, string f) 
+        : Book(t, a, y), fileSize(fs), format(f) {
+        cout << "EBook '" << t << "' created." << endl;
+    }
+
+    EBook(const EBook& other) 
+        : Book(other), fileSize(other.fileSize), format(other.format) {
+        cout << "EBook copied." << endl;
+    }
+
+    ~EBook() {
+        cout << "EBook destroyed." << endl;
+    }
+
+    void display() const {
+        
+        Book::display();
+        cout << "File Size: " << fileSize << " MB" << endl;
+        cout << "Format: " << format << endl;
+    }
+};
+
 int main() {
     
-    Book defaultBook;
-    defaultBook.display();
+    EBook defaultEBook;
+    defaultEBook.display();
     cout << endl;
 
-    Book book1("1984", "George Orwell", 1949);
-    book1.display();
+    EBook ebook1("Digital Fortress", "Dan Brown", 1998, 1.5, "EPUB");
+    ebook1.display();
     cout << endl;
 
-    Book book2 = book1;
-    book2.display();
+    EBook ebook2 = ebook1;
+    ebook2.display();
     cout << endl;
 
     return 0;
