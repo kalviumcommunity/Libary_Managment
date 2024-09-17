@@ -2,57 +2,42 @@
 #include <string>
 using namespace std;
 
-// Base class for common book info
+// Base class Book with common interface
 class Book {
 protected:
-    string title;
-    string author;
+    string title, author;
     int year;
 
 public:
-    Book(string t, string a, int y) : title(t), author(a), year(y) {
-        cout << "Book '" << title << "' created." << endl;
-    }
+    Book(string t, string a, int y) : title(t), author(a), year(y) {}
+    virtual ~Book() {}
 
-    virtual ~Book() {
-        cout << "Book '" << title << "' destroyed." << endl;
-    }
-
+    // Pure virtual methods to be overridden by subclasses
     virtual void display() const = 0;
     virtual string getBookType() const = 0;
 };
 
-// EBook class handles eBook-specific details
+// Derived class EBook
 class EBook : public Book {
 private:
     double fileSize;
     string format;
 
 public:
-    EBook(string t, string a, int y, double fs, string f)
-        : Book(t, a, y), fileSize(fs), format(f) {
-        cout << "EBook '" << title << "' created." << endl;
-    }
+    EBook(string t, string a, int y, double fs, string f) 
+        : Book(t, a, y), fileSize(fs), format(f) {}
 
-    ~EBook() {
-        cout << "EBook '" << title << "' destroyed." << endl;
-    }
-
+    // Override display method for EBook
     void display() const override {
-        cout << "EBook: " << endl;
-        cout << "Title: " << title << endl;
-        cout << "Author: " << author << endl;
-        cout << "Year: " << year << endl;
-        cout << "File Size: " << fileSize << " MB" << endl;
-        cout << "Format: " << format << endl;
+        cout << "EBook:\nTitle: " << title << "\nAuthor: " << author
+             << "\nYear: " << year << "\nFile Size: " << fileSize 
+             << " MB\nFormat: " << format << endl;
     }
 
-    string getBookType() const override {
-        return "EBook";
-    }
+    string getBookType() const override { return "EBook"; }
 };
 
-// PrintedBook class handles printed book-specific details
+// Derived class PrintedBook
 class PrintedBook : public Book {
 private:
     int pageCount;
@@ -60,72 +45,58 @@ private:
 
 public:
     PrintedBook(string t, string a, int y, int pc, string ct)
-        : Book(t, a, y), pageCount(pc), coverType(ct) {
-        cout << "PrintedBook '" << title << "' created." << endl;
-    }
+        : Book(t, a, y), pageCount(pc), coverType(ct) {}
 
-    ~PrintedBook() {
-        cout << "PrintedBook '" << title << "' destroyed." << endl;
-    }
-
+    // Override display method for PrintedBook
     void display() const override {
-        cout << "Printed Book: " << endl;
-        cout << "Title: " << title << endl;
-        cout << "Author: " << author << endl;
-        cout << "Year: " << year << endl;
-        cout << "Page Count: " << pageCount << endl;
-        cout << "Cover Type: " << coverType << endl;
+        cout << "Printed Book:\nTitle: " << title << "\nAuthor: " << author
+             << "\nYear: " << year << "\nPage Count: " << pageCount 
+             << "\nCover Type: " << coverType << endl;
     }
 
-    string getBookType() const override {
-        return "Printed Book";
-    }
+    string getBookType() const override { return "Printed Book"; }
 };
 
-// New class: AudioBook added without modifying the base or existing classes
+// Derived class AudioBook
 class AudioBook : public Book {
 private:
-    double duration; // Duration in hours
+    double duration;
     string narrator;
 
 public:
     AudioBook(string t, string a, int y, double d, string n)
-        : Book(t, a, y), duration(d), narrator(n) {
-        cout << "AudioBook '" << title << "' created." << endl;
-    }
+        : Book(t, a, y), duration(d), narrator(n) {}
 
-    ~AudioBook() {
-        cout << "AudioBook '" << title << "' destroyed." << endl;
-    }
-
+    // Override display method for AudioBook
     void display() const override {
-        cout << "AudioBook: " << endl;
-        cout << "Title: " << title << endl;
-        cout << "Author: " << author << endl;
-        cout << "Year: " << year << endl;
-        cout << "Duration: " << duration << " hours" << endl;
-        cout << "Narrator: " << narrator << endl;
+        cout << "AudioBook:\nTitle: " << title << "\nAuthor: " << author
+             << "\nYear: " << year << "\nDuration: " << duration 
+             << " hours\nNarrator: " << narrator << endl;
     }
 
-    string getBookType() const override {
-        return "AudioBook";
-    }
+    string getBookType() const override { return "AudioBook"; }
 };
 
-// Main function demonstrating usage
-int main() {
-    Book* books[3];
+// Function that works with any Book type (LSP)
+void displayBookDetails(Book* book) {
+    cout << "Details of " << book->getBookType() << ":\n";
+    book->display();
+    cout << endl;
+}
 
+int main() {
+    // Array of Book pointers for LSP demonstration
+    Book* books[3];
     books[0] = new EBook("Digital Fortress", "Dan Brown", 1998, 1.5, "EPUB");
     books[1] = new PrintedBook("The Catcher in the Rye", "J.D. Salinger", 1951, 277, "Hardcover");
-    books[2] = new AudioBook("Becoming", "Michelle Obama", 2018, 19.3, "Michelle Obama");
+    books[2] = new AudioBook("Becoming", "Michelle Obama", 2018, 19.5, "Michelle Obama");
 
+    // Loop to display details of each book
     for (int i = 0; i < 3; ++i) {
-        cout << "Book Type: " << books[i]->getBookType() << endl;
-        books[i]->display();
-        cout << endl;
+        displayBookDetails(books[i]);
     }
 
+    // Clean up
     for (int i = 0; i < 3; ++i) {
         delete books[i];
     }
