@@ -82,20 +82,51 @@ public:
     }
 };
 
+// New class: AudioBook added without modifying the base or existing classes
+class AudioBook : public Book {
+private:
+    double duration; // Duration in hours
+    string narrator;
+
+public:
+    AudioBook(string t, string a, int y, double d, string n)
+        : Book(t, a, y), duration(d), narrator(n) {
+        cout << "AudioBook '" << title << "' created." << endl;
+    }
+
+    ~AudioBook() {
+        cout << "AudioBook '" << title << "' destroyed." << endl;
+    }
+
+    void display() const override {
+        cout << "AudioBook: " << endl;
+        cout << "Title: " << title << endl;
+        cout << "Author: " << author << endl;
+        cout << "Year: " << year << endl;
+        cout << "Duration: " << duration << " hours" << endl;
+        cout << "Narrator: " << narrator << endl;
+    }
+
+    string getBookType() const override {
+        return "AudioBook";
+    }
+};
+
 // Main function demonstrating usage
 int main() {
-    Book* books[2];
+    Book* books[3];
 
     books[0] = new EBook("Digital Fortress", "Dan Brown", 1998, 1.5, "EPUB");
     books[1] = new PrintedBook("The Catcher in the Rye", "J.D. Salinger", 1951, 277, "Hardcover");
+    books[2] = new AudioBook("Becoming", "Michelle Obama", 2018, 19.3, "Michelle Obama");
 
-    for (int i = 0; i < 2; ++i) {
+    for (int i = 0; i < 3; ++i) {
         cout << "Book Type: " << books[i]->getBookType() << endl;
         books[i]->display();
         cout << endl;
     }
 
-    for (int i = 0; i < 2; ++i) {
+    for (int i = 0; i < 3; ++i) {
         delete books[i];
     }
 
