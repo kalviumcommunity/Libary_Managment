@@ -2,6 +2,7 @@
 #include <string>
 using namespace std;
 
+// Base class for common book info
 class Book {
 protected:
     string title;
@@ -12,24 +13,23 @@ public:
     Book(string t, string a, int y) : title(t), author(a), year(y) {
         cout << "Book '" << title << "' created." << endl;
     }
-    
+
     virtual ~Book() {
         cout << "Book '" << title << "' destroyed." << endl;
     }
 
     virtual void display() const = 0;
-
     virtual string getBookType() const = 0;
 };
 
+// EBook class handles eBook-specific details
 class EBook : public Book {
 private:
-    double fileSize; 
-    string format;   
+    double fileSize;
+    string format;
 
 public:
-    
-    EBook(string t, string a, int y, double fs, string f) 
+    EBook(string t, string a, int y, double fs, string f)
         : Book(t, a, y), fileSize(fs), format(f) {
         cout << "EBook '" << title << "' created." << endl;
     }
@@ -52,13 +52,13 @@ public:
     }
 };
 
+// PrintedBook class handles printed book-specific details
 class PrintedBook : public Book {
 private:
-    int pageCount;   
-    string coverType; 
+    int pageCount;
+    string coverType;
 
 public:
-    
     PrintedBook(string t, string a, int y, int pc, string ct)
         : Book(t, a, y), pageCount(pc), coverType(ct) {
         cout << "PrintedBook '" << title << "' created." << endl;
@@ -67,6 +67,7 @@ public:
     ~PrintedBook() {
         cout << "PrintedBook '" << title << "' destroyed." << endl;
     }
+
     void display() const override {
         cout << "Printed Book: " << endl;
         cout << "Title: " << title << endl;
@@ -81,6 +82,7 @@ public:
     }
 };
 
+// Main function demonstrating usage
 int main() {
     Book* books[2];
 
